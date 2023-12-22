@@ -1,0 +1,73 @@
+--1.a)
+SELECT * 
+FROM Sales.SalesTerritory
+
+--1.b)
+SELECT TerritoryID 
+	 , Sales.SalesTerritory.Name
+FROM Sales.SalesTerritory
+
+--1.c)
+SELECT *
+FROM Person.Person
+WHERE LastName='Norman'
+
+--1.d)
+SELECT *
+FROM Person.Person
+WHERE EmailPromotion!=2
+
+------------------------------------------------------------------------
+
+--3.a) VAR Возвращает статистическую дисперсию всех значений в указанном выражении. За функцией может следовать
+SELECT VAR (DISTINCT Weight ) AS "Дисперсия по уникальным весам" -- 47985.73
+FROM Production.Product
+
+SELECT VAR (Weight ) AS "Дисперсия по весу" --33184.66
+FROM Production.Product
+
+
+--3.b) STRING_AGG- Сцепляет значения строковых выражений, помещая между ними значения-разделители. В конце строки разделитель не добавляется
+SELECT STRING_AGG ([Name],', ')
+FROM [Production].[Location]
+
+--3.c) APPROX_COUNT_DISTINCT- Эта функция возвращает приблизительное количество уникальных значений, не равных NULL, в группе.
+--Данный пример тут не работает, т.к. эта функция тут не распознается
+SELECT APPROX_COUNT_DISTINCT([CreditCardID])
+FROM [Sales].[CreditCard]
+
+
+
+-----------------------------------------------------------------------
+--4.a)
+SELECT COUNT(DISTINCT PersonType) AS "Количество типов"
+FROM Person.Person
+
+--4.b)
+SELECT TOP 3 WITH TIES *
+FROM Sales.SpecialOffer
+WHERE StartDate BETWEEN '2013-01-01' AND '2014-01-01'
+ORDER BY DiscountPct DESC
+
+--4.c)
+SELECT  MAX(size) AS "Макс.размер" --XL 
+	   ,MIN(Weight) AS "Мин.вес"   --2,12
+FROM Production.Product
+
+--4.d)
+SELECT ProductSubcategoryID
+	,MAX(size) AS "Макс.размер"
+	,MIN(Weight) AS "Мин.вес"
+FROM Production.Product
+GROUP BY ProductSubcategoryID
+ORDER BY ProductSubcategoryID
+
+--4.e)
+SELECT ProductSubcategoryID
+	,MAX(size) AS "Макс.размер"
+	,MIN(Weight) AS "Мин.вес"
+FROM Production.Product
+WHERE Color IS NOT NULL
+GROUP BY ProductSubcategoryID 
+ORDER BY ProductSubcategoryID
+
