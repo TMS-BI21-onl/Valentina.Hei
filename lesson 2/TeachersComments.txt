@@ -1,0 +1,7 @@
+Well done!
+
+4.a
+You lost WHERE condition, there are some filters needed. Pay a little bit more attention :)
+
+4.d, e
+ORDER BY is not needed.
