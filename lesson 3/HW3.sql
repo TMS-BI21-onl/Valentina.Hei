@@ -17,7 +17,7 @@ FROM [Production].[Product]
 	,pv.[Name] AS VendorName
 	--,ppv.StandardPrice
 FROM  [Purchasing].[ProductVendor] ppv
-JOIN  [Purchasing].[Vendor]  pv ON ppv.[BusinessEntityID]=pv.[BusinessEntityID] -- можно JOIN (только пересечение), т.к. есть фильтры по данным из дыух таблиц, а, значит, данные не NULL
+JOIN  [Purchasing].[Vendor]  pv ON ppv.[BusinessEntityID]=pv.[BusinessEntityID] -- JOIN  becouse StandardPrice and  VendorName in the filter NOT NULL 
 	WHERE  StandardPrice>10 
 	AND (pv.[Name] like '%X%' OR pv.[Name] like 'N%')
 
@@ -42,14 +42,23 @@ WHERE pm.Name LIKE 'LL%'
 
 
 -----------------------------------------------------------------------
---3.b) 
-SELECT  DISTINCT
-		pv.Name AS Vendor
+--3.b.1) 
+SELECT  DISTINCT   pv.Name AS Vendor   -- It is wrong to combine different entities into one list
 		, s.Name AS Store
 FROM [Purchasing].[Vendor] pv
 FULL JOIN [Sales].[Store] s ON s.BusinessEntityID=pv.BusinessEntityID
 ORDER BY 2,1
 
+--3.b.2)
+SELECT DISTINCT t.Name
+FROM (
+	SELECT Name
+	FROM [Purchasing].[Vendor]
+	UNION ALL
+	SELECT  Name
+	FROM [Sales].[Store]
+	) t
+ORDER BY t.Name
 
 -----------------------------------------------------------------------
 --3.c) 
