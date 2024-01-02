@@ -1,0 +1,9 @@
+Well done!
+
+3.b
+v2 is better, but can be done without a subquery.
+You can use ORDER BY as a last row after all UNIONed queries. In this case it would be treated as a ORDER BY of the last query and will work.
+
+3.c
+Can be rewritten without a subquery. 
+Why do we need it? We can just join these 2 tables and move HAVING from the subquery to the main query.
