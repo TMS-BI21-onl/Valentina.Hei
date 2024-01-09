@@ -1,0 +1,47 @@
+--1/1   
+
+SELECT d.FIO
+FROM Driver d 
+WHERE d.Stazh in ('3','5', '6','10')
+AND d.AdresP='eee'
+
+--1/2 
+SELECT d.FIO
+FROM Driver d 
+LEFT JOIN ControlRoom cr ON  d.DriverID=cr.DriverID  WHERE cr.DriverID is NULL
+
+
+--1/3 
+SELECT c.CarID, c.RegNom, cr.TimIN, cr.TomOut, r.PunktN
+FROM ControlRoom cr
+LEFT JOIN Car c  ON c.CarID =cr.CarID
+LEFT JOIN Rout r ON r.RoutID =cr.RoutID
+WHERE c.Yer ='2015'
+
+
+--2/1
+
+
+
+--2/2
+SELECT COUNT() over (PARTITION BY e.JOB_ID, e.Department_ID 
+FROM Eployees e
+JOIN Departments d ON d.Department_ID=e.Department_ID
+JOIN Jobs j ON j.JOB_ID=e.JOB_ID
+GROUP BY e.JOB_ID, e.Department_ID
+
+
+--2/3
+SELECT e.Eployee_ID
+FROM Eployees e
+LEFT JOIN Departments d ON d.Department_ID=e.Department_ID 
+WHERE d.Department_ID IS NULL
+
+--2/4 
+SELECT X.FIRST_NAME
+fROM
+	(SELECT FIRST_NAME
+	MAX(LEN(FIRST_NAME)) AS MAX_LEN
+	FROM Eployees e
+	)X
+wHERE LEN(X.FIRST_NAME)=X.MAX_LEN
