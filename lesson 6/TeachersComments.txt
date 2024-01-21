@@ -1,0 +1,10 @@
+Well done!
+
+It would be better to do it as a procedure.
+CREATE PROCEDURE uspUpdateBEID (@BusinessEntityID int, @NationalIDNumber nvarchar(15))
+AS
+BEGIN
+	UPDATE HumanResources.Employee
+	SET NationalIDNumber=@NationalIDNumber
+	WHERE BusinessEntityID=@BusinessEntityID
+END
