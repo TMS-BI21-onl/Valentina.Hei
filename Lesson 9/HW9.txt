@@ -1,0 +1,8 @@
+--2--------------------------------------
+---: ID, FirstName, LastName,  ID_Father, ID_Mother.
+
+select  CONCAT (p.FirstName,' ', p.LastName),CONCAT (f.FirstName,' ', f.LastName)
+From People p
+LEFT JOIN  Fathers f ON p.ID_Father=f.ID_Father
+WHERE  p.FirstName="Дмитрий"
+
