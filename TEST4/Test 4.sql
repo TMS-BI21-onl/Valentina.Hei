@@ -7,14 +7,14 @@ VALUES  (5,'HP',4)
 
 
 --2---
-UPDATE User  SET age= age
-	   Where  name-"Андрей"
+UPDATE User  SET age= age/3
+	   Where  name="Андрей"
 
 
 --3-- --3/1
 SELECT Top 1 with ties Name, price
 From product
-order by  price
+order by  price desc
 
 --3/2
 SELECT Name, price
