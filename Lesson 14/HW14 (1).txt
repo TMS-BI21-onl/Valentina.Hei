@@ -1,0 +1,16 @@
+CREATE VIEW  RAITING
+AS 
+Select  TOP 50 WITH TIES NAME, SUM(Point) AS sum_point
+FROM (SELECT  CAST(Orderdate as date) as o_Date, v.Name, COUNT([OrderID]) as cnt, 
+		  case 
+		  WHEN COUNT([OrderID])<3 THEN 1
+		  WHEN COUNT([OrderID])>=3 AND COUNT([OrderID])<5 THEN 2
+		  WHEN COUNT([OrderID])>=5 THEN 3
+		  ELSE 0
+		  end AS Point
+		FROM Orders o
+		JOIN Vendor v on V.VendorID=O.VendorID
+		GROUP BY  CAST(Orderdate as date),  v.Name
+		) t
+GROUP BY NAME
+ORDER BY sum_point desc
